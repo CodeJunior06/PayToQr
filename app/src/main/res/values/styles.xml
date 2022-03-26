@@ -2,14 +2,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
 
-
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">cut</item>
         <item name="cornerSize">10dp</item>
-   </style>
+    </style>
+
     <style name="TextAppearance.App.Button" parent="TextAppearance.MaterialComponents.Button">
-        <item name="fontFamily">@font/rubik</item>
-        <item name="android:fontFamily">@font/rubik</item>
+        <item name="fontFamily">@font/fjallaoneregular</item>
+        <item name="android:fontFamily">@font/fjallaoneregular</item>
     </style>
 
     <style name="Theme.App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -46,6 +46,15 @@
         <item name="colorOnPrimary">@color/black</item>
     </style>
 
+
+    <style name="TextRegister">
+        <item name="android:textSize">@dimen/sp_30</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/fjallaoneregular</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:text">REGISTER</item>
+    </style>
 
 
 </resources>
