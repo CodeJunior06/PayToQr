@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import com.codejunior.paytoqr.R
 import com.codejunior.paytoqr.databinding.RegisterFragmentBinding
 import com.codejunior.paytoqr.viewmodel.RegisterViewModel
@@ -20,7 +21,7 @@ class RegisterFragment : Fragment() {
 
 
 
-    private lateinit var viewModel: RegisterViewModel
+    private val viewModel: RegisterViewModel by activityViewModels()
     private var _binding:RegisterFragmentBinding? = null
     private val binding  get() = _binding!!
 
@@ -34,13 +35,15 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = DataBindingUtil.inflate(layoutInflater,R.layout.register_fragment,container,false)
-
+        binding.registerViewModel = viewModel
+        binding.lifecycleOwner= this
+        println("RegisterFragment.onCreateView")
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
+        // viewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
         println("RegisterFragment.onActivityCreated")
         // TODO: Use the ViewModel
     }
