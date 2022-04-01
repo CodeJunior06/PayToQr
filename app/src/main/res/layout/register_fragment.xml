@@ -57,8 +57,8 @@
                         android:id="@+id/userRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{registerViewModel.test}"
-                        android:hint="Escriba un usuario" />
+                        android:hint="Escriba un usuario"
+                        android:text="@={registerViewModel.userRegister.user}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -76,7 +76,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Correo Electronico"
-                        android:text="@{registerViewModel.userRegister.email}"/>
+                        android:text="@={registerViewModel.userRegister.email}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -87,15 +87,15 @@
                     app:counterMaxLength="10"
                     app:errorEnabled="true"
                     app:hintTextColor="#FF0000"
-                    app:passwordToggleEnabled="true"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView">
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/passwordRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Contraseña"
-                        android:text="@{registerViewModel.userRegister.password}"/>
+                        android:text="@={registerViewModel.userRegister.password}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -114,7 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Confirmar Contraseña"
-                        android:text="@{registerViewModel.userRegister.password_intent}"/>
+                        android:text="@={registerViewModel.userRegister.password_intent}" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -134,7 +134,7 @@
                     style="@style/Widget.App.Button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="@{()->  registerViewModel.AcceptLogin()}"
+                    android:onClick="@{()-> registerViewModel.AcceptLogin()}"
                     android:text="CREAR CUENTA"
 
                     />
