@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+
+        <variable
+            name="loginViewModel"
+            type="com.codejunior.paytoqr.viewmodel.LoginViewModel" />
+    </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -52,7 +58,8 @@
                         android:id="@+id/Cedula"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Cedula"
+                        android:hint="Email"
+                        android:text="@={loginViewModel.userLogin.email}"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,7 +78,8 @@
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Contraseña" />
+                        android:hint="Contraseña"
+                        android:text="@={loginViewModel.userLogin.password}"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -91,7 +99,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Crear Cuenta" />
+                    android:text="Crear Cuenta"
+                    android:onClick="@{()-> loginViewModel.createAccount()}"/>
 
                 <Button
                     android:id="@+id/inicarCuentaLogin"
@@ -100,6 +109,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="8"
                     android:text="INICIAR SESION"
+                    android:onClick="@{()-> loginViewModel.accessLogin()}"
 
                     />
 

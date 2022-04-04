@@ -5,19 +5,22 @@ import androidx.lifecycle.ViewModel
 
 open class BaseViewModel:ViewModel(){
 
-    private val error:MutableLiveData<ERROR> = MutableLiveData()
+    val error:MutableLiveData<ERROR> = MutableLiveData()
     private val success:MutableLiveData<SUCCESS> = MutableLiveData()
-    private val navegation:MutableLiveData<NAVIGATION> = MutableLiveData()
+    val navegation:MutableLiveData<NAVIGATION> = MutableLiveData()
 
 
     enum class ERROR {
-
+        EMPTY_FIELD,
+        PASSWORD_NOT_COINCIDER
     }
     enum class SUCCESS {
 
     }
 
     enum class NAVIGATION {
+        NAV_REGISTER,
+        NAV_MENU
 
     }
 

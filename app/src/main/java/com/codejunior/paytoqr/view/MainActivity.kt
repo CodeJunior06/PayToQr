@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.get
 import com.codejunior.paytoqr.R
+import com.codejunior.paytoqr.base.BaseViewModel
 import com.codejunior.paytoqr.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
+     fun validPassword(): Boolean {
 
+        return when {
+            password.isEmpty() -> {
+                error.value = BaseViewModel.ERROR.EMPTY_FIELD
+                false
+            }
+            passwordIntent.isEmpty() -> {
+                false
+            }
+            password.length < 6 -> {
+                false
+            }
+            password != passwordIntent ->
+                false
+            else -> true
+        }
     }
 
     override fun onPause() {

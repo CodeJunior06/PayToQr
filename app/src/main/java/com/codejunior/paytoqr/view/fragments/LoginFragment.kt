@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.codejunior.paytoqr.R
+import com.codejunior.paytoqr.base.BaseViewModel
 import com.codejunior.paytoqr.databinding.BlankFragmentBinding
 import com.codejunior.paytoqr.view.MainMenu
 import com.codejunior.paytoqr.viewmodel.LoginViewModel
@@ -44,17 +45,32 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         println("LoginFragment.onViewCreated")
-        binding.crearCuentaLogin.setOnClickListener{
-            val nanController: NavController = Navigation.findNavController(requireView())
-            nanController.navigate(R.id.action_loginFragment_to_registerFragment)
+
+
+            viewModelLoginViewModel.navegation.observe(this,{
+                when(it){
+                    BaseViewModel.NAVIGATION.NAV_REGISTER -> {
+                        val nanController: NavController = Navigation.findNavController(requireView())
+                        nanController.navigate(R.id.action_loginFragment_to_registerFragment)
+                    }
+                    BaseViewModel.NAVIGATION.NAV_MENU -> {
+                        val intent = Intent(this.context, MainMenu::class.java)
+                        startActivity(intent)
+                    }
+
+                }
+            })
+
             /*requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_login, newInstanceRegister()).commit();*/
 
-        }
-        binding.inicarCuentaLogin.setOnClickListener {
+
+
+
+
             val intent = Intent (this.context, MainMenu::class.java)
             startActivity(intent)
-        }
+
 
 
 
