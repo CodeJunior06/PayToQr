@@ -6,7 +6,11 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.codejunior.paytoqr.view.fragments.RegisterFragment"
-        android:label="RegisterFragment" />
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.codejunior.paytoqr.view.fragments.LoginFragment"

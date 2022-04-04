@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 
 open class BaseViewModel:ViewModel(){
 
-    val error:MutableLiveData<ERROR> = MutableLiveData()
-    private val success:MutableLiveData<SUCCESS> = MutableLiveData()
-    val navegation:MutableLiveData<NAVIGATION> = MutableLiveData()
+    val error:MutableLiveData<ERROR> = MutableLiveData(null)
+    private val success:MutableLiveData<SUCCESS> = MutableLiveData(null)
+    val navegation:MutableLiveData<NAVIGATION> = MutableLiveData(null)
 
 
     enum class ERROR {
@@ -20,7 +20,8 @@ open class BaseViewModel:ViewModel(){
 
     enum class NAVIGATION {
         NAV_REGISTER,
-        NAV_MENU
+        NAV_MENU,
+        NAV_LOGIN
 
     }
 

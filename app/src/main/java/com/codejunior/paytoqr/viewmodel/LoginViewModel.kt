@@ -14,10 +14,11 @@ open class LoginViewModel : BaseViewModel() {
 
     fun accessLogin(){
         validLogin()
+        navegation.value = NAVIGATION.NAV_MENU
     }
 
     private fun validLogin(): Int {
-
+        return 0
     }
 
     fun createAccount(){

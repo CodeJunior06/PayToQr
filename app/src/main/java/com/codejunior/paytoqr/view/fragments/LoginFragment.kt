@@ -39,6 +39,8 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = BlankFragmentBinding.inflate(inflater,container,false)
+        binding.loginViewModel = viewModelLoginViewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -63,16 +65,6 @@ class LoginFragment : Fragment() {
 
             /*requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_login, newInstanceRegister()).commit();*/
-
-
-
-
-
-            val intent = Intent (this.context, MainMenu::class.java)
-            startActivity(intent)
-
-
-
 
     }
 
