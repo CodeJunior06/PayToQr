@@ -48,11 +48,12 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         println("LoginFragment.onViewCreated")
 
-
-            viewModelLoginViewModel.navegation.observe(this,{
+            viewModelLoginViewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_EMPTY
+            viewModelLoginViewModel.navegation.observe(viewLifecycleOwner,{
                 when(it){
                     BaseViewModel.NAVIGATION.NAV_REGISTER -> {
                         val nanController: NavController = Navigation.findNavController(requireView())
+                        nanController.setLifecycleOwner(this)
                         nanController.navigate(R.id.action_loginFragment_to_registerFragment)
                     }
                     BaseViewModel.NAVIGATION.NAV_MENU -> {
@@ -60,6 +61,7 @@ class LoginFragment : Fragment() {
                         startActivity(intent)
                     }
 
+                    else -> {}
                 }
             })
 
@@ -92,6 +94,10 @@ class LoginFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         println("LoginFragment.onDestroy")
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

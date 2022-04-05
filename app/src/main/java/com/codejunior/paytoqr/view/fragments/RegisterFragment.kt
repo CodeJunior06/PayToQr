@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
@@ -28,10 +29,16 @@ class RegisterFragment : Fragment() {
     private var _binding:RegisterFragmentBinding? = null
     private val binding  get() = _binding!!
 
+    init {
+//        viewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_EMPTY
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("RegisterFragment.onCreate")
+       requireActivity().onBackPressedDispatcher.addCallback(this) {
+            binding.registerViewModel!!.navegation.value = BaseViewModel.NAVIGATION.NAV_LOGIN
+        }
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,18 +61,20 @@ class RegisterFragment : Fragment() {
     }*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.error.observe(this,{
+        viewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_EMPTY
+        viewModel.error.observe(viewLifecycleOwner,{
             when(it){
                 BaseViewModel.ERROR.EMPTY_FIELD -> Toast.makeText(context,"Field Empty",Toast.LENGTH_LONG).show()
             }
         })
-        viewModel.navegation.observe(this,{
+        viewModel.navegation.observe(viewLifecycleOwner,{
             when(it){
                 BaseViewModel.NAVIGATION.NAV_LOGIN -> {
                     val nanController: NavController = Navigation.findNavController(requireView())
+                    nanController.setLifecycleOwner(this)
                     nanController.navigate(R.id.action_registerFragment_to_loginFragment)
                 }
+                else->{}
             }
         })
 
@@ -93,6 +102,10 @@ class RegisterFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         println("RegisterFragment.onDestroy")
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

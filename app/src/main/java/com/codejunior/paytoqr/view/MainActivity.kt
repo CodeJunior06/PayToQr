@@ -42,4 +42,9 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
         println("MainActivity.onBackPressed")
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("MainActivity.onDestroy")
+    }
 }

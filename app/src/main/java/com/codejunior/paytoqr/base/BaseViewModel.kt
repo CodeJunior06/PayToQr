@@ -21,7 +21,8 @@ open class BaseViewModel:ViewModel(){
     enum class NAVIGATION {
         NAV_REGISTER,
         NAV_MENU,
-        NAV_LOGIN
+        NAV_LOGIN,
+        NAV_EMPTY
 
     }
 
