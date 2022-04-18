@@ -22,7 +22,13 @@ open class LoginViewModel : BaseViewModel() {
     }
 
     fun createAccount(){
-        navegation.value =NAVIGATION.NAV_REGISTER
+
+        if(password.isNotBlank() && email.isNotBlank()){
+            utils.value = UTILS.DIALOG_PRE_DESIGN
+        }else{
+            navegation.value =NAVIGATION.NAV_REGISTER
+        }
+
     }
 
 }

@@ -40,7 +40,7 @@ class LoginFragment : Fragment() {
     ): View {
         _binding = BlankFragmentBinding.inflate(inflater,container,false)
         binding.loginViewModel = viewModelLoginViewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -53,8 +53,8 @@ class LoginFragment : Fragment() {
                 when(it){
                     BaseViewModel.NAVIGATION.NAV_REGISTER -> {
                         val nanController: NavController = Navigation.findNavController(requireView())
-                        nanController.setLifecycleOwner(this)
                         nanController.navigate(R.id.action_loginFragment_to_registerFragment)
+
                     }
                     BaseViewModel.NAVIGATION.NAV_MENU -> {
                         val intent = Intent(this.context, MainMenu::class.java)
@@ -64,6 +64,10 @@ class LoginFragment : Fragment() {
                     else -> {}
                 }
             })
+
+        viewModelLoginViewModel.utils.observe(viewLifecycleOwner,{
+
+        })
 
             /*requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_login, newInstanceRegister()).commit();*/

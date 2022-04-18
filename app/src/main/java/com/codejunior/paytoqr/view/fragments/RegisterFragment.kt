@@ -1,5 +1,7 @@
 package com.codejunior.paytoqr.view.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +11,6 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.codejunior.paytoqr.R
 import com.codejunior.paytoqr.base.BaseViewModel
@@ -29,6 +30,20 @@ class RegisterFragment : Fragment() {
     private var _binding:RegisterFragmentBinding? = null
     private val binding  get() = _binding!!
 
+    private  var positiveButtonClick = { dialog: DialogInterface, _: Int ->
+        viewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_LOGIN
+        dialog.cancel()
+        dialog.dismiss()
+
+    }
+
+    private val  negativeButtonClick = { dialog: DialogInterface, _: Int ->
+        dialog.cancel()
+        dialog.dismiss()
+
+    }
+
+
     init {
 //        viewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_EMPTY
     }
@@ -37,7 +52,11 @@ class RegisterFragment : Fragment() {
         super.onCreate(savedInstanceState)
         println("RegisterFragment.onCreate")
        requireActivity().onBackPressedDispatcher.addCallback(this) {
+           if(binding.emailRegister.text!!.isNotEmpty()|| binding.passwordRegister.text!!.isNotEmpty()|| binding.rePasswordRegister.text!!.isNotEmpty()){
+               binding.registerViewModel!!.utils.value = BaseViewModel.UTILS.DIALOG_PRE_DESIGN
+           }else{
             binding.registerViewModel!!.navegation.value = BaseViewModel.NAVIGATION.NAV_LOGIN
+           }
         }
     }
     override fun onCreateView(
@@ -46,7 +65,7 @@ class RegisterFragment : Fragment() {
     ): View? {
         _binding = DataBindingUtil.inflate(layoutInflater,R.layout.register_fragment,container,false)
         binding.registerViewModel = viewModel
-        binding.lifecycleOwner= this
+        binding.lifecycleOwner= viewLifecycleOwner
         println("RegisterFragment.onCreateView")
         return binding.root
     }
@@ -59,26 +78,36 @@ class RegisterFragment : Fragment() {
 
 
     }*/
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_EMPTY
-        viewModel.error.observe(viewLifecycleOwner,{
-            when(it){
-                BaseViewModel.ERROR.EMPTY_FIELD -> Toast.makeText(context,"Field Empty",Toast.LENGTH_LONG).show()
+override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    viewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_EMPTY
+    viewModel.error.observe(viewLifecycleOwner, {
+        when (it) {
+            BaseViewModel.ERROR.EMPTY_FIELD -> Toast.makeText(
+                context,
+                "Field Empty",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    })
+    viewModel.navegation.observe(viewLifecycleOwner, {
+        when (it) {
+            BaseViewModel.NAVIGATION.NAV_LOGIN -> {
+                Navigation.findNavController(requireView()).popBackStack()
             }
-        })
-        viewModel.navegation.observe(viewLifecycleOwner,{
-            when(it){
-                BaseViewModel.NAVIGATION.NAV_LOGIN -> {
-                    val nanController: NavController = Navigation.findNavController(requireView())
-                    nanController.setLifecycleOwner(this)
-                    nanController.navigate(R.id.action_registerFragment_to_loginFragment)
-                }
-                else->{}
-            }
-        })
+            else -> {}
+        }
+    })
 
-    }
+    viewModel.utils.observe(viewLifecycleOwner, {
+        when (it) {
+            BaseViewModel.UTILS.DIALOG_PRE_DESIGN -> {
+                alertDialogSimple()
+            }
+        }
+    })
+
+}
 
     override fun onPause() {
         super.onPause()
@@ -101,11 +130,24 @@ class RegisterFragment : Fragment() {
     }
     override fun onDestroy() {
         super.onDestroy()
+        _binding = null
+        viewModel.clear()
         println("RegisterFragment.onDestroy")
     }
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
     }
 
+
+
+    private fun alertDialogSimple(){
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Regresar a login")
+        builder.setMessage("¡UPS! tienes informacion en la vista, deseas regresar de igual manera?")
+        builder.setPositiveButton("SI", DialogInterface.OnClickListener(function = positiveButtonClick))
+        builder.setNegativeButton("Cancelar", DialogInterface.OnClickListener(function = negativeButtonClick))
+        builder.setCancelable(false)
+        builder.show()
+
+    }
 }
