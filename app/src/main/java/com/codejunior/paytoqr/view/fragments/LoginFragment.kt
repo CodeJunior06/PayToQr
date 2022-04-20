@@ -1,6 +1,7 @@
 package com.codejunior.paytoqr.view.fragments
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.navigation.Navigation
 import com.codejunior.paytoqr.R
 import com.codejunior.paytoqr.base.BaseViewModel
 import com.codejunior.paytoqr.databinding.BlankFragmentBinding
+import com.codejunior.paytoqr.utils.Utilities.Companion.alertDialogSimple
 import com.codejunior.paytoqr.view.MainMenu
 import com.codejunior.paytoqr.viewmodel.LoginViewModel
 
@@ -20,6 +22,19 @@ class LoginFragment : Fragment() {
 
     companion object {
         fun newInstance() = LoginFragment()
+    }
+    private  var positiveButtonClick = { dialog: DialogInterface, _: Int ->
+        clearView()
+        viewModelLoginViewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_REGISTER
+        dialog.cancel()
+        dialog.dismiss()
+
+    }
+
+    private val  negativeButtonClick = { dialog: DialogInterface, _: Int ->
+        dialog.cancel()
+        dialog.dismiss()
+
     }
     private var _binding: BlankFragmentBinding? = null
     private val binding get() = _binding!!
@@ -52,6 +67,9 @@ class LoginFragment : Fragment() {
             viewModelLoginViewModel.navegation.observe(viewLifecycleOwner,{
                 when(it){
                     BaseViewModel.NAVIGATION.NAV_REGISTER -> {
+                        if(binding.emailLogin.text!!.isNotEmpty()|| binding.password.text!!.isNotEmpty()){
+                            viewModelLoginViewModel.utils.value = BaseViewModel.UTILS.DIALOG_PRE_DESIGN
+                        }
                         val nanController: NavController = Navigation.findNavController(requireView())
                         nanController.navigate(R.id.action_loginFragment_to_registerFragment)
 
@@ -67,11 +85,19 @@ class LoginFragment : Fragment() {
 
         viewModelLoginViewModel.utils.observe(viewLifecycleOwner,{
 
+            when(it){
+                BaseViewModel.UTILS.DIALOG_PRE_DESIGN -> alertDialogSimple(context!!,positiveButtonClick,negativeButtonClick)
+            }
+
         })
 
             /*requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_login, newInstanceRegister()).commit();*/
 
+    }
+    private  fun clearView(){
+        binding.emailLogin.text = null
+        binding.password.text = null
     }
 
 

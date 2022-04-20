@@ -15,6 +15,7 @@ import androidx.navigation.Navigation
 import com.codejunior.paytoqr.R
 import com.codejunior.paytoqr.base.BaseViewModel
 import com.codejunior.paytoqr.databinding.RegisterFragmentBinding
+import com.codejunior.paytoqr.utils.Utilities.Companion.alertDialogSimple
 import com.codejunior.paytoqr.viewmodel.RegisterViewModel
 
 class RegisterFragment : Fragment() {
@@ -102,7 +103,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     viewModel.utils.observe(viewLifecycleOwner, {
         when (it) {
             BaseViewModel.UTILS.DIALOG_PRE_DESIGN -> {
-                alertDialogSimple()
+                alertDialogSimple(context!!,positiveButtonClick,negativeButtonClick)
             }
         }
     })
@@ -140,7 +141,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
 
-    private fun alertDialogSimple(){
+   /* private fun alertDialogSimple(){
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Regresar a login")
         builder.setMessage("¡UPS! tienes informacion en la vista, deseas regresar de igual manera?")
@@ -149,5 +150,5 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         builder.setCancelable(false)
         builder.show()
 
-    }
+    }*/
 }
