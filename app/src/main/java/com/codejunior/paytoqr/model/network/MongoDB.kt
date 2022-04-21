@@ -10,6 +10,7 @@ class MongoDB {
             password
         ) {
             if (it.isSuccess) {
+                it.get()
                 println("REGISTRO")
             } else {
                 println("NO REGISTRO")

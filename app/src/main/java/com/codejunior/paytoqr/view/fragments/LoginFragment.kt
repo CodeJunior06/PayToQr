@@ -25,9 +25,9 @@ class LoginFragment : Fragment() {
     }
     private  var positiveButtonClick = { dialog: DialogInterface, _: Int ->
         clearView()
-        viewModelLoginViewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_REGISTER
         dialog.cancel()
         dialog.dismiss()
+        navigateRegister()
 
     }
 
@@ -69,10 +69,9 @@ class LoginFragment : Fragment() {
                     BaseViewModel.NAVIGATION.NAV_REGISTER -> {
                         if(binding.emailLogin.text!!.isNotEmpty()|| binding.password.text!!.isNotEmpty()){
                             viewModelLoginViewModel.utils.value = BaseViewModel.UTILS.DIALOG_PRE_DESIGN
+                        }else{
+                            navigateRegister()
                         }
-                        val nanController: NavController = Navigation.findNavController(requireView())
-                        nanController.navigate(R.id.action_loginFragment_to_registerFragment)
-
                     }
                     BaseViewModel.NAVIGATION.NAV_MENU -> {
                         val intent = Intent(this.context, MainMenu::class.java)
@@ -95,6 +94,12 @@ class LoginFragment : Fragment() {
                 .replace(R.id.fragment_login, newInstanceRegister()).commit();*/
 
     }
+
+    private fun navigateRegister() {
+        val nanController: NavController = Navigation.findNavController(requireView())
+        nanController.navigate(R.id.action_loginFragment_to_registerFragment)
+    }
+
     private  fun clearView(){
         binding.emailLogin.text = null
         binding.password.text = null

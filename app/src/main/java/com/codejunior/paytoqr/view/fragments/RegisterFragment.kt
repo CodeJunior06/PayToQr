@@ -94,6 +94,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     viewModel.navegation.observe(viewLifecycleOwner, {
         when (it) {
             BaseViewModel.NAVIGATION.NAV_LOGIN -> {
+                clearView()
                 Navigation.findNavController(requireView()).popBackStack()
             }
             else -> {}
@@ -109,6 +110,12 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     })
 
 }
+
+    fun clearView(){
+        binding.emailRegister.text = null
+        binding.passwordRegister.text = null
+        binding.rePasswordRegister.text = null
+    }
 
     override fun onPause() {
         super.onPause()
