@@ -24,10 +24,11 @@ class LoginFragment : Fragment() {
         fun newInstance() = LoginFragment()
     }
     private  var positiveButtonClick = { dialog: DialogInterface, _: Int ->
-        clearView()
+
         dialog.cancel()
         dialog.dismiss()
         navigateRegister()
+        clearView()
 
     }
 
@@ -44,6 +45,7 @@ class LoginFragment : Fragment() {
         super.onAttach(context)
         println("LoginFragment.onAttach")
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("LoginFragment.onCreate")
@@ -62,8 +64,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         println("LoginFragment.onViewCreated")
-
-            viewModelLoginViewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_EMPTY
+        clearView()
             viewModelLoginViewModel.navegation.observe(viewLifecycleOwner,{
                 when(it){
                     BaseViewModel.NAVIGATION.NAV_REGISTER -> {
@@ -74,8 +75,10 @@ class LoginFragment : Fragment() {
                         }
                     }
                     BaseViewModel.NAVIGATION.NAV_MENU -> {
+
                         val intent = Intent(this.context, MainMenu::class.java)
                         startActivity(intent)
+                        clearView()
                     }
 
                     else -> {}
@@ -103,6 +106,8 @@ class LoginFragment : Fragment() {
     private  fun clearView(){
         binding.emailLogin.text = null
         binding.password.text = null
+        viewModelLoginViewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_EMPTY
+        viewModelLoginViewModel.utils.value = BaseViewModel.UTILS.DIALOG_EMPTY
     }
 
 

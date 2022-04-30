@@ -8,5 +8,6 @@ data class ModelRegister(val emailRegister:String,val password:String) {
 
     fun authRegister(){
         mongoDatabase.registerNewUser(emailRegister,password)
+        println("paso por aqui 2")
     }
 }

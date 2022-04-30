@@ -1,6 +1,5 @@
 package com.codejunior.paytoqr.view.fragments
 
-import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -45,10 +44,6 @@ class RegisterFragment : Fragment() {
     }
 
 
-    init {
-//        viewModel.navegation.value = BaseViewModel.NAVIGATION.NAV_EMPTY
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("RegisterFragment.onCreate")
@@ -63,7 +58,7 @@ class RegisterFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DataBindingUtil.inflate(layoutInflater,R.layout.register_fragment,container,false)
         binding.registerViewModel = viewModel
         binding.lifecycleOwner= viewLifecycleOwner
@@ -94,8 +89,8 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     viewModel.navegation.observe(viewLifecycleOwner, {
         when (it) {
             BaseViewModel.NAVIGATION.NAV_LOGIN -> {
-                clearView()
                 Navigation.findNavController(requireView()).popBackStack()
+                clearView()
             }
             else -> {}
         }
@@ -111,7 +106,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 }
 
-    fun clearView(){
+    private fun clearView(){
         binding.emailRegister.text = null
         binding.passwordRegister.text = null
         binding.rePasswordRegister.text = null

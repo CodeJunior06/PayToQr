@@ -10,7 +10,7 @@ open class LoginViewModel : BaseViewModel() {
     val userLogin: LiveData<DataLogin?> get() = _user
 
     val email:String by lazy { userLogin.value?.email ?:""}
-    val password:String by lazy { userLogin.value?.email ?:""}
+    val password:String by lazy { userLogin.value?.password ?:""}
 
     fun accessLogin(){
         validLogin()
